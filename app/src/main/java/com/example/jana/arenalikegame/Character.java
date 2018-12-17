@@ -16,10 +16,13 @@ public class Character {
     private Dice dice;
 
     Character() {
-
+        this.strenght = 0;
+        this.dexterity = 0;
+        this.vitality = 0;
+        this.willPower = 0;
     }
 
-    Character(String name, String charClass, int strenght, int dexterity, int vitality, int magie, int willPower, Dice dice) {
+    Character(String name, String charClass, int strenght, int dexterity, int vitality, int willPower, Dice dice) {
         this.name = name;
         this.charClass = charClass;
         this.strenght = strenght;
