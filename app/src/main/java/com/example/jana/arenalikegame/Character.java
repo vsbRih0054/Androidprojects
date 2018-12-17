@@ -15,6 +15,10 @@ public class Character {
     private int defense;
     private Dice dice;
 
+    Character() {
+
+    }
+
     Character(String name, String charClass, int strenght, int dexterity, int vitality, int magie, int willPower, Dice dice) {
         this.name = name;
         this.charClass = charClass;
