@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+
 public class LevelsActivity extends AppCompatActivity {
 
     @Override
@@ -14,6 +15,6 @@ public class LevelsActivity extends AppCompatActivity {
         Character character = (Character) getIntent().getSerializableExtra("serialize_data");
 
         TextView nameText = (TextView) findViewById(R.id.Name);
-        nameText.setText(character.getName());
+        nameText.setText(character.getCharClass());
     }
 }

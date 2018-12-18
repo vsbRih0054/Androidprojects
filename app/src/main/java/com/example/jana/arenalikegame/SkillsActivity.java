@@ -1,18 +1,30 @@
 package com.example.jana.arenalikegame;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-public class SkillsActivity extends AppCompatActivity {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SkillsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Character player = new Character("","", 0, 0, 0, 0, new Dice(12));
     private int points = 16;
     private EditText charNameEdit;
+    private Spinner charClassesSpinr;
     private TextView pointsText;
     private Button addStrBtn;
     private Button lowStrBtn;
@@ -34,6 +46,21 @@ public class SkillsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_skills);
 
         charNameEdit = (EditText) findViewById(R.id.charName);
+
+        List<String> spinnerArray =  new ArrayList<String>();
+        spinnerArray.add("Warrior");
+        spinnerArray.add("Rogue");
+        spinnerArray.add("Mage");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerArray);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        charClassesSpinr = (Spinner) findViewById(R.id.charClasses);
+        charClassesSpinr.setAdapter(adapter);
+        charClassesSpinr.setOnItemSelectedListener(this);
+
+
         pointsText = (TextView) findViewById(R.id.pointsVal);
         addStrBtn = (Button) findViewById(R.id.addStr);
         lowStrBtn = (Button) findViewById(R.id.lowStr);
@@ -160,6 +187,17 @@ public class SkillsActivity extends AppCompatActivity {
                                           @Override
                                           public void onClick(View v) {
                                               player.setName(charNameEdit.getText().toString());
+                                              try {
+                                                  FileOutputStream fos = openFileOutput("data.txt", Context.MODE_PRIVATE);
+                                                  ObjectOutputStream os = new ObjectOutputStream(fos);
+                                                  os.writeObject(player);
+                                                  os.close();
+                                                  fos.close();
+                                              }
+                                              catch(IOException e1) {
+
+                                              }
+
                                               Intent intent = new Intent(SkillsActivity.this, LevelsActivity.class);
                                               intent.putExtra("serialize_data",player);
                                               startActivity(intent);
@@ -168,6 +206,17 @@ public class SkillsActivity extends AppCompatActivity {
 
         );
     }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        // An item was selected. You can retrieve the selected item using
+        //parent.getItemAtPosition(pos)
+        player.setCharClass(charClassesSpinr.getSelectedItem().toString());
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
+    }
+
 
     private void disablePointsAdding() {
         addStrBtn.setEnabled(false);
