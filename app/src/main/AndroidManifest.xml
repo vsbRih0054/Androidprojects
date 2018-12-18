@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".LevelsActivity" />
-        <activity android:name=".SkillsActivity"></activity>
+        <activity android:name=".SkillsActivity" />
+        <activity android:name=".AbilitiesActivity"></activity>
     </application>
 
 </manifest>

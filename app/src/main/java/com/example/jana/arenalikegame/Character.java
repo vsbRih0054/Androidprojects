@@ -1,6 +1,8 @@
 package com.example.jana.arenalikegame;
 
-public class Character {
+import java.io.Serializable;
+
+public class Character implements Serializable {
     private String name;
     private String charClass;
     private int strenght;
@@ -14,13 +16,7 @@ public class Character {
     private int attackPower;
     private int defense;
     private Dice dice;
-
-    Character() {
-        this.strenght = 0;
-        this.dexterity = 0;
-        this.vitality = 0;
-        this.willPower = 0;
-    }
+    String massage;
 
     Character(String name, String charClass, int strenght, int dexterity, int vitality, int willPower, Dice dice) {
         this.name = name;
@@ -149,5 +145,32 @@ public class Character {
 
     public int getDefense() {
         return defense;
+    }
+
+    public void defenseCharacter(int uder) {
+        int zraneni=uder-(defense + dice.throwDice());
+        if (zraneni > 0) {
+            health -= zraneni;
+            massage = String.format("%s utrpěl poškození %s hp", name, zraneni);
+            if( health<=0) {
+                health=0;
+                massage += " a zemřel";
+            }
+        } else
+            massage = String.format("%s odrazil útok", name);
+    }
+
+    public void attack(Character protivnik) {
+        int uder = attackPower + dice.throwDice();
+        nastavZpravu(String.format("%s útočí s úderem za %s hp", name, uder));
+        protivnik.defenseCharacter(uder);
+    }
+
+    protected void nastavZpravu(String zprava) {
+        this.massage = zprava;
+    }
+
+    public String vratPosledniZpravu() {
+        return massage;
     }
 }

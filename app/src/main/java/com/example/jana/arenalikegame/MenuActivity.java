@@ -14,12 +14,23 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         Button newGameBtn = (Button) findViewById(R.id.newGame);
+        Button exitGamebtn = (Button) findViewById(R.id.exitGame);
+
         newGameBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(MenuActivity.this, SkillsActivity.class));
                 }
             }
+        );
+
+        exitGamebtn.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              finish();
+                                              System.exit(0);
+                                          }
+                                      }
         );
     }
 

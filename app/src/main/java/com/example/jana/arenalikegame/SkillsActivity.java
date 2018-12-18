@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class SkillsActivity extends AppCompatActivity {
 
-    private Character player = new Character();
-    private int points = 5;
+    private Character player = new Character("","", 0, 0, 0, 0, new Dice(12));
+    private int points = 16;
+    private EditText charNameEdit;
     private TextView pointsText;
     private Button addStrBtn;
     private Button lowStrBtn;
@@ -31,6 +33,7 @@ public class SkillsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skills);
 
+        charNameEdit = (EditText) findViewById(R.id.charName);
         pointsText = (TextView) findViewById(R.id.pointsVal);
         addStrBtn = (Button) findViewById(R.id.addStr);
         lowStrBtn = (Button) findViewById(R.id.lowStr);
@@ -45,6 +48,7 @@ public class SkillsActivity extends AppCompatActivity {
         vitValText = (TextView) findViewById(R.id.vitVal);
         wpValText = (TextView) findViewById(R.id.wpVal);
         confirmBtn = (Button) findViewById(R.id.confirm);
+
 
         pointsText.setText(Integer.toString(points));
 
@@ -155,7 +159,10 @@ public class SkillsActivity extends AppCompatActivity {
         confirmBtn.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
-                                              startActivity(new Intent(SkillsActivity.this, LevelsActivity.class));
+                                              player.setName(charNameEdit.getText().toString());
+                                              Intent intent = new Intent(SkillsActivity.this, LevelsActivity.class);
+                                              intent.putExtra("serialize_data",player);
+                                              startActivity(intent);
                                           }
                                       }
 

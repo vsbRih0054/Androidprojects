@@ -1,8 +1,9 @@
 package com.example.jana.arenalikegame;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Dice {
+public class Dice implements Serializable {
     private Random random;
     private int numberOfWalls;
 
