@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".LevelsActivity" />
         <activity android:name=".SkillsActivity" />
-        <activity android:name=".AbilitiesActivity"></activity>
+        <activity android:name=".AbilitiesActivity" />
+        <activity android:name=".BattleActivity"></activity>
     </application>
 
 </manifest>
