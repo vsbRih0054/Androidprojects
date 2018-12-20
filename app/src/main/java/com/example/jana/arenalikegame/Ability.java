@@ -1,9 +1,10 @@
 package com.example.jana.arenalikegame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Ability {
-    class Effect {
+public class Ability implements Serializable {
+    class Effect implements Serializable {
         private final String targetAttribute;
         private int value;
 
@@ -13,12 +14,18 @@ public class Ability {
         }
     }
 
+    private final String abilityName;
     private final int cost;
     private ArrayList<Effect> effects;
 
-    public Ability(int cost) {
+    public Ability(String abilityName, int cost) {
+        this.abilityName = abilityName;
         this.cost = cost;
         effects = new ArrayList<>();
+    }
+
+    public int getCost() {
+        return this.cost;
     }
 
     public void setEffects(Effect effect) {
@@ -27,15 +34,11 @@ public class Ability {
 
     public void applyEffects(Character targetUnit) {
         for(int i = 0; i < effects.size(); i++)
-            switch(effects.get(i).targetAttribute){
-                case "damege" : int uder = effects.get(i).value;
-                                targetUnit.setVydrzMana(targetUnit.getVydrzMana()-cost);
-                                targetUnit.nastavZpravu(String.format("%s použil schopnost s úderem za %s hp", targetUnit.getName(), uder));
-                                targetUnit.defenseCharacter(uder);
+            switch(effects.get(0).targetAttribute){
+                case "damege" :break;
+                case "defense" : break;
+                case "health" : targetUnit.setHealth(targetUnit.getHealth() - effects.get(0).value);
                                 break;
-                case "defense" :
-                                 break;
-                case "health" : break;
             }
     }
 }

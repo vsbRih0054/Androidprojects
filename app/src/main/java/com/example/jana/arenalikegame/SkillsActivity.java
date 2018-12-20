@@ -11,8 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -207,6 +205,7 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
                                               Intent intent = new Intent(SkillsActivity.this, LevelsActivity.class);
                                               intent.putExtra("serialize_data",player);
                                               startActivity(intent);
+                                              finish();
                                           }
                                       }
 

@@ -35,6 +35,7 @@ public class MenuActivity extends AppCompatActivity {
                                                    Intent intent = new Intent(MenuActivity.this, LevelsActivity.class);
                                                    intent.putExtra("serialize_data", character);
                                                    startActivity(intent);
+                                                   finish();
                                                } catch (IOException e1) {
                                                } catch (ClassNotFoundException e) {
                                                    e.printStackTrace();
@@ -47,6 +48,7 @@ public class MenuActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     startActivity(new Intent(MenuActivity.this, SkillsActivity.class));
+                    finish();
                 }
             }
         );

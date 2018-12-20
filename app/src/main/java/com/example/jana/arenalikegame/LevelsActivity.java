@@ -29,6 +29,17 @@ public class LevelsActivity extends AppCompatActivity {
                 Intent intent = new Intent(LevelsActivity.this, BattleActivity.class);
                 intent.putExtra("serialize_data",player);
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        Button returnmenubtn = (Button) findViewById(R.id.backmenubtn);
+        returnmenubtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LevelsActivity.this, MenuActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

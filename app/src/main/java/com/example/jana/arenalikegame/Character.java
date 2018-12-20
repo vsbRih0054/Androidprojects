@@ -1,6 +1,8 @@
 package com.example.jana.arenalikegame;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Character implements Serializable {
     private String name;
@@ -18,6 +20,7 @@ public class Character implements Serializable {
     private int defense;
     private Dice dice;
     String massage;
+    List<Ability> abilities = new ArrayList<>();
 
     Character(String name, String charClass, String hostility, int strenght, int dexterity, int vitality, int willPower, Dice dice) {
         this.name = name;
@@ -39,6 +42,20 @@ public class Character implements Serializable {
         defense = dexterity +10;
         stamina =10* willPower;
         maxStamina = stamina;
+        Ability ability1 = new Ability("Ability1",10);
+        Ability.Effect effect1 = ability1.new Effect("health", 30);
+        ability1.setEffects(effect1);
+        abilities.add(ability1);
+
+        Ability ability2 = new Ability("Ability2",12);
+        Ability.Effect effect2 = ability2.new Effect("health", 20);
+        ability2.setEffects(effect2);
+        abilities.add(ability2);
+
+        Ability ability3 = new Ability("Ability3",14);
+        Ability.Effect effect3 = ability3.new Effect("health", 100);
+        ability3.setEffects(effect3);
+        abilities.add(ability3);
     }
 
     public void setStrenght(int strenght) {
@@ -168,6 +185,13 @@ public class Character implements Serializable {
         int uder = attackPower + dice.throwDice();
         nastavZpravu(String.format("%s útočí s úderem za %s hp", name, uder));
         protivnik.defenseCharacter(uder);
+    }
+
+    public void useAbility(int abilittId, Character protivnik) {
+        if (this.stamina >=  abilities.get(abilittId).getCost()) {
+            abilities.get(abilittId).applyEffects(protivnik);
+            this.stamina -= abilities.get(abilittId).getCost();
+        }
     }
 
     protected void nastavZpravu(String zprava) {

@@ -1,29 +1,37 @@
 package com.example.jana.arenalikegame;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Document;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-public class BattleActivity extends AppCompatActivity {
+public class BattleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private int selectedAbility;
+    private Spinner abspin;
     private Character selectedAlly;
     private Character selectedEnemy;
     private Character player;
-    private Character enemy1 = new Character("Enemy1", "Warrior", "hostile",4, 3, 4, 3, new Dice(12));
+    private Character enemy1 = new Character("Enemy1", "Warrior", "hostile",7, 3, 4, 3, new Dice(12));
     private Character enemy2 = new Character("Enemy2", "Rogue", "hostile",3, 4, 3, 4, new Dice(12));
-    private Character ally = new Character("Ally", "Warrior", "friendly",4, 3, 4, 3, new Dice(12));
+    private Character ally = new Character("Ally", "Warrior", "friendly",14, 3, 4, 3, new Dice(12));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,22 @@ public class BattleActivity extends AppCompatActivity {
         selectedAlly = player;
         selectedEnemy = enemy1;
 
+
+
+        List<String> spinnerArray =  new ArrayList<String>();
+        spinnerArray.add("Ability1");
+        spinnerArray.add("Ability2");
+        spinnerArray.add("Ability3");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerArray);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        abspin = (Spinner) findViewById(R.id.abspinner);
+        abspin.setAdapter(adapter);
+        abspin.setOnItemSelectedListener(this);
+
         Button attackbtn = (Button) findViewById(R.id.attackbtn);
         attackbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +103,43 @@ public class BattleActivity extends AppCompatActivity {
                     health1txt.setText(ally.getHealth()+"/"+ally.getMaxZdravi());
                 else
                     health0txt.setText(player.getHealth()+"/"+player.getMaxZdravi());
+
+                if(enemy1.getHealth() <= 0 && enemy2.getHealth() <= 0){
+                    player.setHealth(player.getMaxZdravi());
+                    Intent intent = new Intent(BattleActivity.this, LevelsActivity.class);
+                    intent.putExtra("serialize_data", player);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        Button abilityusebtn = (Button) findViewById(R.id.useabilitybtn);
+        abilityusebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedAlly.useAbility(selectedAbility, selectedEnemy);
+                if(selectedEnemy.getName() == "Enemy1")
+                    health2txt.setText(enemy1.getHealth()+"/"+enemy1.getMaxZdravi());
+                else
+                    health3txt.setText(enemy2.getHealth()+"/"+enemy2.getMaxZdravi());
+
+                if( selectedAlly.getName() == "Ally") {
+                    health1txt.setText(ally.getHealth() + "/" + ally.getMaxZdravi());
+                    stamina1txt.setText(ally.getVydrzMana() + "/" + ally.getMaxVydrzMana());
+                }
+                else {
+                    health0txt.setText(player.getHealth() + "/" + player.getMaxZdravi());
+                    stamina0txt.setText(player.getVydrzMana()+"/"+player.getMaxVydrzMana());
+                }
+
+                if(enemy1.getHealth() <= 0 && enemy2.getHealth() <= 0) {
+                    player.setHealth(player.getMaxZdravi());
+                    Intent intent = new Intent(BattleActivity.this, LevelsActivity.class);
+                    intent.putExtra("serialize_data", player);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
@@ -122,6 +183,16 @@ public class BattleActivity extends AppCompatActivity {
                 selectenemytxt.setText(selectedEnemy.getName());
             }
         });
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        selectedAbility = position;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }
