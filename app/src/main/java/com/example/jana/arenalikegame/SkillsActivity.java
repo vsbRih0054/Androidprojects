@@ -21,8 +21,14 @@ import java.util.List;
 
 public class SkillsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Character player = new Character("","", 0, 0, 0, 0, new Dice(12));
-    private int points = 16;
+    private int points = 20;
+
+    private String charclas;
+    private int str = 0;
+    private int dex = 0;
+    private int vit = 0;
+    private int will = 0;
+
     private EditText charNameEdit;
     private Spinner charClassesSpinr;
     private TextView pointsText;
@@ -82,8 +88,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         addStrBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             player.setStrenght(player.getStrenght()+1);
-                                             strValText.setText(Integer.toString(player.getStrenght()));
+                                             str+=1;
+                                             strValText.setText(Integer.toString(str));
                                              points--;
                                              pointsText.setText(Integer.toString(points));
                                              if(points==0)
@@ -95,8 +101,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         lowStrBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             player.setStrenght(player.getStrenght()-1);
-                                             strValText.setText(Integer.toString(player.getStrenght()));
+                                             str -= 1;
+                                             strValText.setText(Integer.toString(str));
                                              points++;
                                              pointsText.setText(Integer.toString(points));
                                              if(points>0)
@@ -108,8 +114,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         addDexBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             player.setDexterity(player.getDexterity()+1);
-                                             dexValText.setText(Integer.toString(player.getDexterity()));
+                                             dex += 1;
+                                             dexValText.setText(Integer.toString(dex));
                                              points--;
                                              pointsText.setText(Integer.toString(points));
                                              if(points==0)
@@ -121,8 +127,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         lowDexBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             player.setDexterity(player.getDexterity()-1);
-                                             dexValText.setText(Integer.toString(player.getDexterity()));
+                                             dex -= 1;
+                                             dexValText.setText(Integer.toString(dex));
                                              points++;
                                              pointsText.setText(Integer.toString(points));
                                              if(points>0)
@@ -134,8 +140,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         addVitBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             player.setVitality(player.getVitality()+1);
-                                             vitValText.setText(Integer.toString(player.getVitality()));
+                                             vit += 1;
+                                             vitValText.setText(Integer.toString(vit));
                                              points--;
                                              pointsText.setText(Integer.toString(points));
                                              if(points==0)
@@ -147,8 +153,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         lowVitBtn.setOnClickListener(new View.OnClickListener() {
                                          @Override
                                          public void onClick(View v) {
-                                             player.setVitality(player.getVitality()-1);
-                                             vitValText.setText(Integer.toString(player.getVitality()));
+                                             vit -= 1;
+                                             vitValText.setText(Integer.toString(vit));
                                              points++;
                                              pointsText.setText(Integer.toString(points));
                                              if(points>0)
@@ -160,8 +166,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         addWpBtn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            player.setSilaVule(player.getSilaVule()+1);
-                                            wpValText.setText(Integer.toString(player.getSilaVule()));
+                                            will += 1;
+                                            wpValText.setText(Integer.toString(will));
                                             points--;
                                             pointsText.setText(Integer.toString(points));
                                             if(points==0)
@@ -173,8 +179,8 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         lowWpBtn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            player.setSilaVule(player.getSilaVule()-1);
-                                            wpValText.setText(Integer.toString(player.getSilaVule()));
+                                            will -= 1;
+                                            wpValText.setText(Integer.toString(will));
                                             points++;
                                             pointsText.setText(Integer.toString(points));
                                             if(points>0)
@@ -186,7 +192,7 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
         confirmBtn.setOnClickListener(new View.OnClickListener() {
                                           @Override
                                           public void onClick(View v) {
-                                              player.setName(charNameEdit.getText().toString());
+                                              Character player = new Character(charNameEdit.getText().toString(), charclas, "friendly",str, dex, vit, will, new Dice(12));
                                               try {
                                                   FileOutputStream fos = openFileOutput("data.txt", Context.MODE_PRIVATE);
                                                   ObjectOutputStream os = new ObjectOutputStream(fos);
@@ -210,7 +216,7 @@ public class SkillsActivity extends AppCompatActivity implements AdapterView.OnI
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         //parent.getItemAtPosition(pos)
-        player.setCharClass(charClassesSpinr.getSelectedItem().toString());
+        charclas = charClassesSpinr.getSelectedItem().toString();
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

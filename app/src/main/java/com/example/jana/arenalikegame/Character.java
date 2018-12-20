@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Character implements Serializable {
     private String name;
     private String charClass;
+    private String hostility;
     private int strenght;
     private int dexterity;
     private int vitality;
@@ -18,9 +19,10 @@ public class Character implements Serializable {
     private Dice dice;
     String massage;
 
-    Character(String name, String charClass, int strenght, int dexterity, int vitality, int willPower, Dice dice) {
+    Character(String name, String charClass, String hostility, int strenght, int dexterity, int vitality, int willPower, Dice dice) {
         this.name = name;
         this.charClass = charClass;
+        this.hostility = hostility;
         this.strenght = strenght;
         this.dexterity = dexterity;
         this.vitality = vitality;
@@ -86,6 +88,8 @@ public class Character implements Serializable {
     public String getCharClass() {
         return charClass;
     }
+
+    public String getHostility() { return this.hostility; }
 
     public int getMaxZdravi() {
         return maxHealth;

@@ -19,7 +19,7 @@
         <activity android:name=".LevelsActivity" />
         <activity android:name=".SkillsActivity" />
         <activity android:name=".AbilitiesActivity" />
-        <activity android:name=".BattleActivity"></activity>
+        <activity android:name=".BattleActivity" android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
